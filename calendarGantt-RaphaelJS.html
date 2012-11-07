@@ -1,0 +1,282 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Calendar Gantt</title>
+<link href="style.css" media="screen, projection" rel="stylesheet" type="text/css" />
+
+<!-- RAPHAEL JS LIBRARY -->
+<!-- script src="js/raphael-min.js" type="text/javascript" ></script-->
+<script src="js/raphael.js" type="text/javascript" ></script>
+
+<!--  jquery core -->
+<script src="js/jquery/jquery-1.4.1.min.js" type="text/javascript"></script>
+<script src="js/jquery/jquery-ui.min.js" type="text/javascript"></script>
+
+
+<script type="text/javascript">
+
+Event = function Event(id, start, end, label, rectAttributes, textAttributes){
+	this.id = id;
+	this.start = start;
+	this.end = end;
+	this.label = label;
+	this.rectObjects = new Array();
+	this.textObjects = new Array();
+	this.rectAtt = rectAttributes || {fill: "#ccc", stroke: "#999", opacity: 0.7};
+	this.textAtt = textAttributes || {font: '12px "Arial"', fill: "#000"};
+	
+	this.drawIn = function (canvas){
+ 		var paper = canvas.paper; 
+		// bacis parameters
+		var dayWidth = 50; 
+		var rect_height = 19;
+		var textY = 11;
+
+		// calculations for the rect
+		var rect_startX = (this.start-1) * dayWidth;
+		var rect_startY = 1;
+		var rect_width = (this.end - this.start) * dayWidth;
+		
+		// drawings : rect
+		var round = 2;
+		var rect = paper.rect(rect_startX,rect_startY, rect_width - 2, rect_height, round).attr(this.rectAtt);
+		
+		// calculations for the text
+		var textX = rect_startX + (rect_width / 2);
+		
+		// drawings : text
+		var text = paper.text( textX , textY, this.label).attr(this.textAtt);
+		
+		// return all objects to change aspects
+		var setOfObjects = paper.set(rect, text);
+		setOfObjects.id = "group_"+this.id+"@"+canvas.id;
+		rect.id = "rect_"+this.id+"_"+canvas.id;
+		text.id = "text_"+this.id+"_"+canvas.id;
+
+		rect.eventObject = this;
+		text.eventObject = this;
+
+		canvas.addEvent( this );
+		this.rectObjects.push(rect);
+		this.textObjects.push(text);
+
+		var myNewEvent = this;
+		// mouse over
+		setOfObjects.mouseover(function (evt) {myNewEvent._mouseover(evt, this); } );
+		setOfObjects.mouseout(function (evt) {myNewEvent._mouseout(evt, this); } );
+		
+		// click
+		//setOfObjects.click(function (evt) {myNewEvent._click(evt, this); } );
+		
+		// Drag-n-Drop  
+		rect.drag(this._dragMove, this._dragStart, this._dragUp);
+		text.drag(this._dragMove, this._dragStart, this._dragUp);
+		
+		return this;			
+	};
+	
+	this._mouseover = function (evt, aRaphaelObject){
+		for(var i=0;i<this.rectObjects.length;i++){
+			this.rectObjects[i].attr({fill: "#aaa", stroke: "#000"});
+		}
+		for(var i=0;i<this.textObjects.length;i++){
+			this.textObjects[i].attr({fill: "#000"});
+		}
+		
+	};
+	this._mouseout = function (evt, aRaphaelObject){
+		for(var i=0;i<this.rectObjects.length;i++){
+			this.rectObjects[i].attr(this.rectAtt);
+		}
+		for(var i=0;i<this.textObjects.length;i++){
+			this.textObjects[i].attr(this.textAtt);
+		}
+	};
+
+	this._click = function (evt, aRaphaelObject){
+		alert("EVENT id : " + this.id+"\n"+
+				"start : "+ this.start+"\n"+
+				"end : "+this.end+"\n"+
+				"label : "+this.label);
+	};
+		
+	this._dragMove = function (dx,dy){
+		raphaelObject = this;
+		eventObject = raphaelObject.eventObject;
+		for(var i=0;i<eventObject.rectObjects.length;i++){
+			eventObject.rectObjects[i].attr({x : eventObject.rectObjects[i].rx + dx});
+		}
+		for(var i=0;i<eventObject.textObjects.length;i++){
+			eventObject.textObjects[i].attr({x : eventObject.textObjects[i].tx + dx});
+		}	
+	};
+	
+	this._dragStart = function (){
+		raphaelObject = this;
+		eventObject = raphaelObject.eventObject;
+		for(var i=0;i<eventObject.rectObjects.length;i++){
+			eventObject.rectObjects[i].rx = eventObject.rectObjects[i].attr("x");
+		}
+		for(var i=0;i<eventObject.textObjects.length;i++){
+			eventObject.textObjects[i].tx = eventObject.textObjects[i].attr("x");
+		}		
+		
+	};
+	this._dragUp = function(){
+		/*
+		alert("up");
+		*/
+	};
+	
+}
+ 
+Canvas = function Canvas(idOfDiv){
+	this.id = idOfDiv;
+	this.paper = Raphael(idOfDiv, $("#"+idOfDiv).width(), $("#"+idOfDiv).height());
+	this.events = new Array();
+	
+	this.addEvent = function (newEvt){
+		this.events[newEvt.id] = newEvt;
+	};
+	
+};
+
+</script>
+
+
+<script type="text/javascript">
+$(function() {
+	var canvas_001 = new Canvas('events_r001');
+	var canvas_002 = new Canvas('events_r002');
+	var canvas_003 = new Canvas('events_r003');
+	var canvas_004 = new Canvas('events_r004');
+	var canvas_005 = new Canvas('events_r005');
+	
+	
+	var evt0 = new Event(0, 5, 8,"Event Paris - WSDD",{fill: "#f00", stroke: "#999"});
+	evt0._mouseover = function (evt, aRaphaelObject){
+		for(var i=0;i<this.textObjects.length;i++){
+			this.textObjects[i].attr({fill: "#fff"});
+		}
+		for(var i=0;i<this.rectObjects.length;i++){
+			this.rectObjects[i].attr({fill: "#000", stroke:"#000"});
+		}
+	};
+	
+	evt0.drawIn(canvas_001);
+	evt0.drawIn(canvas_003).drawIn(canvas_004);
+	
+	var evt1 = new Event(1, 1.8, 5, "Schedule 23");
+	evt1.drawIn(canvas_001);
+	
+	var evt2 = new Event(2, 1, 3, "Meeting SF").drawIn(canvas_002);
+	
+	var evt3 = new Event(3, 1.8, 4.5, "Schedule 23 bis").drawIn(canvas_003);
+});
+</script>
+
+
+
+</head>
+<body>
+
+<div class="largeCalendar">
+	<div class="month">
+		<div class="prevMonth"></div>
+		<div class="nameMonth">October 2012</div>
+		<div class="nextMonth"></div>
+	</div>
+
+	<div class="leftColumn horizontalCalendarHeaders">
+		<div class="headerRessources">
+			<span class="labelCenter">Name</span>
+		</div>
+		<div class="listRessources">
+			<!-- GROUP 001 -->
+			<div id="g001" class="group">
+				<span class="labelLeft">Singers</span>
+			</div>
+			<div id="r001" data-group="g001" class="ressource lineRessource">
+				<span class="labelRight">Henri</span>
+			</div>
+			<div id="r002" data-group="g001" class="ressource lineRessource">
+				<span class="labelRight">Frank</span>
+			</div>
+			<div id="r003" data-group="g001" class="ressource lineRessource">
+				<span class="labelRight">Jennifer</span>
+			</div>
+			
+			<!-- GROUP 002 -->
+			<div id="g002" colspan="2" class="group">
+				<span class="labelLeft">Objects</span>
+			</div>
+			<div id="r004" data-group="g002" class="ressource lineRessource">
+				<span class="labelRight">Micro</span>
+			</div>
+			<div id="r005" data-group="g002" class="ressource lineRessource">
+				<span class="labelRight">Ampli</span>
+			</div>
+		</div>
+	</div>
+	
+	<div class="container">
+		<div class="horizontalCalendarContent for31days">
+			<div class="lineOfDays">
+				<div class="day" id="day_01">01</div>
+				<div class="day" id="day_02">02</div>
+				<div class="day" id="day_03">03</div>
+				<div class="day" id="day_04">04</div>
+				<div class="day" id="day_05">05</div>
+				<div class="day" id="day_06">06</div>
+				<div class="day" id="day_07">07</div>
+				<div class="day" id="day_08">08</div>
+				<div class="day" id="day_09">09</div>
+				<div class="day" id="day_10">10</div>
+				<div class="day" id="day_11">11</div>
+				<div class="day" id="day_12">12</div>
+				<div class="day" id="day_13">13</div>
+				<div class="day" id="day_14">14</div>
+				<div class="day" id="day_15">15</div>
+				<div class="day" id="day_16">16</div>
+				<div class="day" id="day_17">17</div>
+				<div class="day" id="day_18">18</div>
+				<div class="day" id="day_19">19</div>
+				<div class="day" id="day_20">20</div>
+				<div class="day" id="day_21">21</div>
+				<div class="day" id="day_22">22</div>
+				<div class="day" id="day_23">23</div>
+				<div class="day" id="day_24">24</div>
+				<div class="day" id="day_25">25</div>
+				<div class="day" id="day_26">26</div>
+				<div class="day" id="day_27">27</div>
+				<div class="day" id="day_28">28</div>
+				<div class="day" id="day_29">29</div>
+				<div class="day" id="day_30">30</div>
+				<div class="day" id="day_31">31</div>
+			</div>
+
+			<!-- GROUP 001 -->
+			<div data-group="g001" class="group">
+				&nbsp;
+			</div>
+			<div class="lineForRessource" data-ressource="r001" id="events_r001"></div>
+			<div class="lineForRessource" data-ressource="r002" id="events_r002"></div>
+			<div class="lineForRessource" data-ressource="r003" id="events_r003"></div>
+
+			<!-- GROUP 002 -->
+			<div data-group="g002" class="group">
+				&nbsp;
+			</div>
+			<div class="lineForRessource" data-ressource="r004" id="events_r004"></div>
+			<div class="lineForRessource" data-ressource="r005" id="events_r005"></div>
+		</div>
+	</div>
+</div>
+
+inspirations: 
+ http://dribbble.com/shots/672011-Calendar-of-timeline
+
+
+</body>
+</html>
