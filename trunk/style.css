@@ -57,6 +57,7 @@
 	height: 23px;
 	padding-top: 1px;
 	background-image: url('img/bg-grid.gif');
+	position: relative;
 }
 
 .for31days {
@@ -200,14 +201,15 @@
 .event{
 	background-color: #ccc;
 	height: 16px;
-	position: relative;
 	border-radius: 3px;
 	cursor: pointer;
 	text-align: center;
-	padding-top: 3px;
 	border: 1px solid #555;
 	font-family: arial;
 	color: #222;
+	top: 1px;
+	position: absolute;
+	padding-top: 3px;
 }
 
 .event:hover{

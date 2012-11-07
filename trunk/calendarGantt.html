@@ -14,14 +14,28 @@
 <script type="text/javascript">
 
 function addEvent(ressourceId, eventId, startDay, endDay, label){
-	var margin = 50 * startDay;
+	var margin = 50 * (startDay - 1);
 	var width = 50 * (endDay - startDay) - 3;
-	return $("#"+ressourceId).append('<div id="'+eventId+'" class="event" style="margin-left: '+margin+'px;width:'+width+'px;">'+label+'</div>');
+	$("#"+ressourceId).append('<div id="'+eventId+'" class="event" style="left: '+margin+'px;width:'+width+'px;">'+label+'</div>');
+	$("#"+eventId).draggable({ axis: "x", containment: "parent", opacity: 0.5, snap: true });
+	$("#"+ressourceId).droppable({
+		drop: function(event, ui){
+			var containerLeft = $(this).offset().left;
+			var eventLeft = ui.offset.left;
+			var newDayStart = 1 + ((eventLeft - containerLeft) / 50); // px
+			alert("newDayStart: "+  newDayStart );
+		}
+	});
 }
 
 $(function() {
-	addEvent("events_r002", "event_001", 2, 5, "Event Paris - WSDD");
-	$( "#event_001" ).draggable({ axis: "x" });
+	addEvent("events_r001", "event_001", 2, 5, "Event Paris - WSDD");
+	addEvent("events_r002", "event_002", 2, 5, "Paris - WSDD(2-5)");
+	addEvent("events_r002", "event_002b", 3, 5, "SF - EEES(3-5)");
+	addEvent("events_r003", "event_003", 7, 9, "team (7-9)");
+	addEvent("events_r004", "event_004", 1.5, 5.5, "Same thing");
+	addEvent("events_r005", "event_005", 4, 5, "Chic");
+	
 });
 </script>
 
