@@ -198,14 +198,22 @@
 }
 
 .event{
-	background-color: #f00;
-	height: 24px;
-	display: inline;
+	background-color: #ccc;
+	height: 16px;
 	position: relative;
-	border-radius: 5px;
-	padding-left: 30px;
-	padding-right: 30px;
+	border-radius: 3px;
 	cursor: pointer;
+	text-align: center;
+	padding-top: 3px;
+	border: 1px solid #555;
+	font-family: arial;
+	color: #222;
+}
+
+.event:hover{
+	box-shadow: 0 0 3px black;
+	border: 1px solid #000;
+	color: #000;
 }
 
 .eventContent{
