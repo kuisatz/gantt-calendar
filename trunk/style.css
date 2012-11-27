@@ -1,7 +1,7 @@
 @CHARSET "UTF-8";
 
 .largeCalendar{
-	width: 601px;
+	/*width: 601px;*/
 	height: 300px;
 	border: 1px solid #555;
 	border-radius: 3px;
@@ -12,12 +12,17 @@
 	float: left;
 	border-right: 1px solid #aaa;
 }
-.container{
-	width: 495px;
+.eventsContainer{
+	width: 300px;
 	overflow:auto;
 	float: right;
 }
 
+
+.debug{
+	border: 1px solid red;
+	height: 50px;
+}
 
 .group{
 	font-weight: normal;

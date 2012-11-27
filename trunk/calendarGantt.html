@@ -9,147 +9,26 @@
 <script src="js/jquery/jquery-1.4.1.min.js" type="text/javascript"></script>
 <script src="js/jquery/jquery-ui.min.js" type="text/javascript"></script>
 
+<!-- Calendar -->
+<script src="js/ganttCalendar-src.js" type="text/javascript"></script>
 
 
 <script type="text/javascript">
 
-TimeLineMonth = function(container, month, year, ressources) {
-	  this.init(container, month, year, ressources);
-}
 
-$.extend(TimeLineMonth.prototype, {
-	// object variables
-	container:'',
-	month: '',
-	year: '',
-	days: {1:[31,31],2:[28,29],3:[31,31],4:[30,30],5:[31,31],6:[30,30],
-		7:[31,31],8:[31,31],9:[30,30],10:[31,31],11:[30,30],12:[31,31]
-	},
-	lang: 'fr',
-	months: {'fr':["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Aout", "Septembre", "Octobre", "Novembre", "Décembre"],
-		'en':["January", "February", "March", "April", "May", "June", "July", "Agust", "September", "October", "November", "December"]
-	},
-	ressourcesColumnHeader : 'Ressources',
-	init: function(container, month, year, ressources) {
-		this.container = container;
-		this.month = month;
-		this.year = year;
-		this.ressources = ressources;
-		this.drawElements();
-	},
-
-	drawElements: function() {
-		var containerObj = $("#"+this.container);
-		var largeCalendar = $( document.createElement('div') ).addClass("largeCalendar");
-		containerObj.html(largeCalendar);
-		
-		var monthLine = $( document.createElement('div') ).addClass("month");
-		largeCalendar.html(monthLine);
-		monthLine.html("<div class=\"prevMonth\"></div>\
-		<div class=\"nameMonth\">"+this.months[this.lang][this.month-1]+" "+this.year+"</div>\
-		<div class=\"nextMonth\"></div>");
-		
-		var calendarHeaders = $( document.createElement('div') ).addClass("leftColumn horizontalCalendarHeaders");
-		largeCalendar.append(calendarHeaders);
-		
-		var container = $( document.createElement('div') ).addClass("container");
-		largeCalendar.append(container);
-		
-		
-		var headerRessources = $( document.createElement('div') ).addClass("headerRessources");
-		calendarHeaders.html(headerRessources);
-		
-		var spanLabelCenter = $( document.createElement('span') ).addClass("labelCenter").html(this.ressourcesColumnHeader);
-		headerRessources.html(spanLabelCenter);
-		
-		var listRessources = $( document.createElement('div') ).addClass("listRessources");
-		calendarHeaders.append(listRessources);
-		
-		
-		// All groups and ressources, prepare left side
-		for(var indexGroup=0;indexGroup<this.ressources.groups.length;indexGroup++){
-			var group = this.ressources.groups[indexGroup];
-			listRessources.append("<div id=\"group_"+group.id+"\" class=\"group\">\
-					<span class=\"labelLeft\">"+group.name+"</span>\
-				</div>");
-			
-			for(var indexRessource=0;indexRessource<group.ressources.length;indexRessource++){
-				var ressource = group.ressources[indexRessource];
-				listRessources.append("<div id=\"ressource_"+ressource.id+"\" data-group=\"group_"+group.id+"\" class=\"ressource lineRessource\">\
-					<span class=\"labelRight\">"+ressource.name+"</span>\
-					</div>");
-			}
-		}
-		
-		var bisextile = ((this.year % 4) && !(this.year % 100))?(1):(0);
-		var horizontalCalendarContent = $( document.createElement('div') )
-			.addClass("horizontalCalendarContent for"+this.days[this.month][bisextile]+"days");
-		container.append(horizontalCalendarContent);
-		
-		var lineOfDays = $( document.createElement('div') ).addClass("lineOfDays");
-		horizontalCalendarContent.html(lineOfDays);
-		
-		var htmlDays = "";
-		for(var indexDay=1;indexDay<=this.days[this.month][bisextile];indexDay++){
-			var day2digits = indexDay;
-			htmlDays += "<div class=\"day\" id=\"day_"+day2digits+"\">"+day2digits+"</div>";
-		}
-		lineOfDays.html(htmlDays);
-		
-		// All groups and ressources, prepare content
-		for(var indexGroup=0;indexGroup<this.ressources.groups.length;indexGroup++){
-			var group = this.ressources.groups[indexGroup];
-			horizontalCalendarContent.append("<div data-group=\"group_"+group.id+"\" class=\"group\">&nbsp;</div>");
-			
-			for(var indexRessource=0;indexRessource<group.ressources.length;indexRessource++){
-				var ressource = group.ressources[indexRessource];
-				horizontalCalendarContent.append("<div class=\"lineForRessource\" data-ressource=\"ressource_"+ressource.id+"\" id=\"events_r_"+ressource.id+"\"></div>");
-			}
-		}
-		
-	}
-});
-
-Event = function(ressourceId, eventId, startDay, endDay, label) {
-	  this.init(ressourceId, eventId, startDay, endDay, label);
-}
-
-$.extend(Event.prototype, {
-	// object variables
-	ressourceId: '',
-	eventId: '',
-	startDay: '',
-	endDay: '',
-	label: '',
-	
-	init: function(ressourceId, eventId, startDay, endDay, label) {
-		this.ressourceId = ressourceId;
-		this.eventId = eventId;
-		this.startDay = startDay;
-		this.endDay = endDay;
-		this.label = label;
-	},
-
-	drawIn: function(containerId) {
-		var margin = 50 * (this.startDay - 1);
-		var width = 50 * (this.endDay - this.startDay) - 3;
-		
-		$("#"+containerId).find("#events_r_"+this.ressourceId).append('<div id="'+this.eventId+'" class="event" style="left: '+margin+'px;width:'+width+'px;">'+this.label+'</div>');
-		$("#"+containerId).find("#"+this.eventId).draggable({ axis: "x", containment: "parent", opacity: 0.5, snap: true });
-		$("#"+containerId).find("#events_r_"+this.ressourceId).droppable({
-			drop: function(event, ui){
-				var containerLeft = $(this).offset().left;
-				var eventLeft = ui.offset.left;
-				var newDayStart = 1 + ((eventLeft - containerLeft) / 50); // px
-				//alert("newDayStart: "+  newDayStart );
-			}
-		});
-		return this; 
-	}
-});
 
 
 $(function() {
+	//Event(ressourceId, eventId, startDay, endDay, label)
+	
+	// 2012 - oct :
+	var evt1 = new Event(1, "event_001", 2, 5, "Event Paris - WSDD");
+	var evt2 = new Event(2, "event_002", 2, 5, "Paris - WSDD(2-5)");
+	
+	// 2012 - nov :
+	var evt3 = new Event(3, "event_002", 3, 5, "SF - EEES(3-5)");
+	var evt3bis = new Event(3, "event_002BIS", 8, 14, "SF - Paintings");
+	var evt4 = new Event(4, "event_003", 7, 9, "team (7-9)");
 
 	var timeline = new TimeLineMonth("myGanttCalendar",11, 2012,
 			{groups: 
@@ -163,11 +42,35 @@ $(function() {
 					ressources: [{name:"Micro",id:4}, 
 					             {name:"Ampli", id:5}]
 				}]
+			},
+			function(){
+				switch(this.year){
+					case 2011:
+						break;
+					case 2012:
+						switch (this.month) {
+						case 10:
+							evt1.drawIn(this.container);
+							evt2.drawIn(this.container);
+							break;
+						case 11:
+							evt3.drawIn(this.container);
+							evt3bis.drawIn(this.container);
+							evt4.drawIn(this.container);
+							break;
+
+						default:
+							break;
+						}
+						break;
+					default:
+						break;
+				}
+				 
+				//alert("month changed : " + this.month);
 			}
 	);
 
-	var evt1 = new Event(1, "event_001", 2, 5, "Event Paris - WSDD").drawIn("myGanttCalendar");
-	var evt2 = new Event(2, "event_002", 2, 5, "Paris - WSDD(2-5)").drawIn("myGanttCalendar");
 /*
 	addEvent("events_r001", "event_001", 2, 5, "Event Paris - WSDD");
 	addEvent("events_r002", "event_002", 2, 5, "Paris - WSDD(2-5)");
@@ -186,7 +89,7 @@ $(function() {
 
 <div id="myGanttCalendar">
 </div>
-
+<div class="debug"></div>
 
 
 </body>
