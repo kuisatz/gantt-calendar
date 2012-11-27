@@ -228,3 +228,26 @@
 }
 
 
+.specialEvent{
+	background-image: url('img/glyphs-16/star.png');
+	background-position: right;
+	background-repeat: no-repeat;	
+}
+
+.lockEvent{
+	background-image: url('img/glyphs-16/lock.png');
+	background-position: right;
+	background-repeat: no-repeat;	
+}
+
+.unlockEvent{
+	background-image: url('img/glyphs-16/unlock.png');
+	background-position: right;
+	background-repeat: no-repeat;	
+}
+
+.flagEvent{
+	background-image: url('img/glyphs-16/flag.png');
+	background-position: right;
+	background-repeat: no-repeat;	
+}
