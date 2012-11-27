@@ -85,7 +85,8 @@ $.extend(TimeLineMonth.prototype, {
 		
 		var bisextile = ( (this.year%4==0 && this.year%100!=0) || this.year%400==0 )?(1):(0);
 		var horizontalCalendarContent = $( document.createElement('div') )
-			.addClass("horizontalCalendarContent for"+this.days[this.month][bisextile]+"days");
+			.addClass("horizontalCalendarContent for"+this.days[this.month][bisextile]+"days")
+			.attr("tabindex", "0");
 		eventsContainer.append(horizontalCalendarContent);
 		
 		var lineOfDays = $( document.createElement('div') ).addClass("lineOfDays");
@@ -152,15 +153,15 @@ $.extend(TimeLineMonth.prototype, {
 			switch(event.keyCode) {
 				case 34: // PAGE_DOWN
 					$calendarObject.goToPrevMonth();
+					$(".horizontalCalendarContent").focus();
 					break;
 				case 33: //PAGE_UP
 					$calendarObject.goToNextMonth();
-					alert("up");
+					$(".horizontalCalendarContent").focus();
 					break;
 				default:
 					break;
 			};
-			alert("key");
 		});
 	}
 	
