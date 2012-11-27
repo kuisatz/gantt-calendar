@@ -38,16 +38,12 @@ $.extend(TimeLineMonth.prototype, {
 		
 		var largeCalendar = $( document.createElement('div') ).addClass("largeCalendar");
 		containerObj.html(largeCalendar);
-		/*
-		var debugObj = $( document.createElement('div') ).addClass("debug");
-		containerObj.after(debugObj);
-		//debugObj.html("Debug");
-		*/
+		
 		var monthLine = $( document.createElement('div') ).addClass("month");
 		largeCalendar.html(monthLine);
-		monthLine.html("<div class=\"prevMonth\"></div>\
+		monthLine.html("<div class=\"prevMonth\" title=\"[Page down] Go to Previous month\"></div>\
 		<div class=\"nameMonth\">"+this.months[this.lang][this.month-1]+" "+this.year+"</div>\
-		<div class=\"nextMonth\" id=\"nextMonth\"></div>");
+		<div class=\"nextMonth\" id=\"nextMonth\" title=\"[Page up] Go to next month\"></div>");
 		
 		var calendarHeaders = $( document.createElement('div') ).addClass("leftColumn horizontalCalendarHeaders");
 		largeCalendar.append(calendarHeaders);
@@ -163,6 +159,12 @@ $.extend(TimeLineMonth.prototype, {
 					break;
 			};
 		});
+		
+		$(window).resize(function() {
+			$calendarObject.drawElements();
+			$calendarObject.updateMonthCallback();
+		});
+
 	}
 	
 });
@@ -178,6 +180,7 @@ $.extend(Event.prototype, {
 	startDay: '',
 	endDay: '',
 	label: '',
+	jObject: null,
 	
 	init: function(ressourceId, eventId, startDay, endDay, label) {
 		this.ressourceId = ressourceId;
@@ -192,6 +195,7 @@ $.extend(Event.prototype, {
 		var width = 50 * (this.endDay - this.startDay) - 3;
 		
 		$("#"+containerId).find("#events_r_"+this.ressourceId).append('<div id="'+this.eventId+'" class="event" style="left: '+margin+'px;width:'+width+'px;">'+this.label+'</div>');
+		this.jObject = $("#"+this.eventId);
 		$("#"+containerId).find("#"+this.eventId).draggable({ axis: "x", containment: "parent", opacity: 0.5, snap: true });
 		$("#"+containerId).find("#events_r_"+this.ressourceId).droppable({
 			drop: function(event, ui){
