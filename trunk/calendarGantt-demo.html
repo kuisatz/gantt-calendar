@@ -16,18 +16,23 @@
 <script type="text/javascript">
 
 $(function() {
-	//Event(ressourceId, eventId, startDay, endDay, label)
+	// Definition : Event(ressourceId, eventId, startDay, endDay, label)
 	
 	// 2012 - oct :
 	var evt1 = new Event(1, "event_001", 2, 5, "Event Paris - WSDD");
 	var evt2 = new Event(2, "event_002", 2, 5, "Paris - WSDD(2-5)");
+	var evt5 = new Event(3, "event_005", 5, 15, "Long journey");
+	var evt6 = new Event(1, "event_006", 6, 10, "Visit Stan LONE");
+	var evt7 = new Event(1, "event_007", 12, 19, "Confirm Dentist");
+	var evt8 = new Event(4, "event_008", 6, 10, "Visit Stan LONE");
+	var evt9 = new Event(5, "event_009", 10, 15, "Maintenance");
 	
 	// 2012 - nov :
 	var evt3 = new Event(3, "event_002", 3, 5, "SF - EEES(3-5)");
 	var evt3bis = new Event(3, "event_002BIS", 8, 14, "SF - Paintings");
 	var evt4 = new Event(4, "event_003", 7, 9, "team (7-9)");
 
-	var timeline = new TimeLineMonth("myGanttCalendar",11, 2012,
+	var timeline = new TimeLineMonth("myGanttCalendar",10, 2012,
 			{groups: 
 				[  {name: "Singers",
 					id: 1,
@@ -48,11 +53,22 @@ $(function() {
 						switch (this.month) {
 						case 10:
 							evt1.drawIn(this.container);
+							evt1.jObject.addClass("specialEvent");
 							evt2.drawIn(this.container);
+							evt2.jObject.addClass("flagEvent");
+							evt5.drawIn(this.container);
+							evt5.jObject.addClass("flagEvent");
+							evt6.drawIn(this.container);
+							evt6.jObject.addClass("lockEvent");
+							evt7.drawIn(this.container);
+							evt7.jObject.addClass("unlockEvent");
+							evt8.drawIn(this.container);
+							evt9.drawIn(this.container);
 							break;
 						case 11:
 							evt3.drawIn(this.container);
 							evt3bis.drawIn(this.container);
+							evt3bis.jObject.addClass("lockEvent");
 							evt4.drawIn(this.container);
 							break;
 
@@ -77,7 +93,77 @@ $(function() {
 <div id="myGanttCalendar">
 </div>
 <div class="debug"></div>
+<pre>
 
+$(function() {
+	// Definition : Event(ressourceId, eventId, startDay, endDay, label)
+	
+	// 2012 - oct :
+	var evt1 = new Event(1, "event_001", 2, 5, "Event Paris - WSDD");
+	var evt2 = new Event(2, "event_002", 2, 5, "Paris - WSDD(2-5)");
+	var evt5 = new Event(3, "event_005", 5, 15, "Long journey");
+	var evt6 = new Event(1, "event_006", 6, 10, "Visit Stan LONE");
+	var evt7 = new Event(1, "event_007", 12, 19, "Confirm Dentist");
+	var evt8 = new Event(4, "event_008", 6, 10, "Visit Stan LONE");
+	var evt9 = new Event(5, "event_009", 10, 15, "Maintenance");
+	
+	// 2012 - nov :
+	var evt3 = new Event(3, "event_002", 3, 5, "SF - EEES(3-5)");
+	var evt3bis = new Event(3, "event_002BIS", 8, 14, "SF - Paintings");
+	var evt4 = new Event(4, "event_003", 7, 9, "team (7-9)");
+
+	var timeline = new TimeLineMonth("myGanttCalendar",10, 2012,
+			{groups: 
+				[  {name: "Singers",
+					id: 1,
+					ressources: [{name:"Henri", id:1}, 
+					             {name:"Frank", id:2},
+					             {name:"Jenny", id:3}]
+				}, {name: "Objects",
+					id: 2,
+					ressources: [{name:"Micro",id:4}, 
+					             {name:"Ampli", id:5}]
+				}]
+			},
+			function(){
+				switch(this.year){
+					case 2011:
+						break;
+					case 2012:
+						switch (this.month) {
+						case 10:
+							evt1.drawIn(this.container);
+							evt1.jObject.addClass("specialEvent");
+							evt2.drawIn(this.container);
+							evt2.jObject.addClass("flagEvent");
+							evt5.drawIn(this.container);
+							evt5.jObject.addClass("flagEvent");
+							evt6.drawIn(this.container);
+							evt6.jObject.addClass("lockEvent");
+							evt7.drawIn(this.container);
+							evt7.jObject.addClass("unlockEvent");
+							evt8.drawIn(this.container);
+							evt9.drawIn(this.container);
+							break;
+						case 11:
+							evt3.drawIn(this.container);
+							evt3bis.drawIn(this.container);
+							evt3bis.jObject.addClass("lockEvent");
+							evt4.drawIn(this.container);
+							break;
+
+						default:
+							break;
+						}
+						break;
+					default:
+						break;
+				}
+			}
+	);
+
+});
+</pre>
 
 </body>
 </html>
