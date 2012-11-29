@@ -51,8 +51,8 @@ $.extend(TimeLineMonth.prototype, {
 		this.ressources = ressources;
 		this.updateMonthCallback = updateMonthCallback || function(){};
 
-		this.drawElements();
-		this.updateMonthCallback();
+		//this.drawElements();
+		//this.updateMonthCallback();
 		
 		return this;
 	},
