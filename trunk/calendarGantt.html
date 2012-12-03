@@ -15,9 +15,6 @@
 
 <script type="text/javascript">
 
-
-
-
 $(function() {
 	//Event(ressourceId, eventId, startDay, endDay, label)
 	
@@ -30,7 +27,7 @@ $(function() {
 	var evt3bis = new Event(4, "event_003BIS", 8, 14, "SF - Paintings");
 	var evt4 = new Event(5, "event_004", 7, 9, "team (7-9)");
 
-	var timeline = new TimeLineMonth("myGanttCalendar",11, 2012,
+	var timeline = new TimeLineMonth("myGanttCalendar",10, 2012,
 			{groups: 
 				[  {name: "Singers",
 					id: 1,
@@ -73,8 +70,24 @@ $(function() {
 				//alert("month changed : " + this.month);
 			}
 	);
-
 	
+	timeline.lang = 'fr';
+	timeline.drawElements();
+	timeline.updateMonthCallback();
+	
+	evt1.jObject.mouseover(
+	function(e){
+		var infoBox = $("#info_evt1");
+		var x = e.pageX - this.offsetLeft;
+		var y = e.pageY - this.offsetTop;
+		infoBox.css("left",x+60);
+		infoBox.css("top",y+15);
+		infoBox.show();
+	});
+	evt1.jObject.mouseout(function(e){
+		$("#info_evt1").hide();
+	});
+
 	
 });
 </script>
@@ -86,7 +99,12 @@ $(function() {
 
 <div id="myGanttCalendar">
 </div>
-<div class="debug"></div>
+
+<div id="info_evt1" class="infoBox" style="display:none;position: absolute; top:0; left:0;">
+Ceci est une info bulle.
+</div>
+
+<!-- div class="debug"></div-->
 
 
 </body>
