@@ -215,6 +215,7 @@
 	top: 1px;
 	position: absolute;
 	padding-top: 3px;
+	font-size: 12px;
 }
 
 .event:hover{
