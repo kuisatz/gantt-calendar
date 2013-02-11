@@ -89,6 +89,20 @@ $(function() {
 	timeline.drawElements();
 	timeline.updateMonthCallback();
 
+	
+	evt1.jObject.mouseover(
+	function(e){
+		var infoBox = $("#info_evt1");
+		var x = e.pageX - this.offsetLeft;
+		var y = e.pageY - this.offsetTop;
+		infoBox.css("left",x+60);
+		infoBox.css("top",y+15);
+		infoBox.show();
+	});
+	evt1.jObject.mouseout(function(e){
+		$("#info_evt1").hide();
+	});
+	
 });
 </script>
 
@@ -99,6 +113,21 @@ $(function() {
 
 <div id="myGanttCalendar">
 </div>
+
+
+<div id="info_evt1" class="infoBox" style="display:none;position: absolute; top:10; left:10;">
+	<div class="header">Event Paris - WSDD</div>
+	<div class="content">
+		La 3e et la plus importante conférence des Nations Unies sur l’environnement et le
+développement durable, aussi connue sous le nom de « Sommet planète Terre », a eu lieu à RIO
+de Janeiro, au Brésil en juin 1992. Cette conférence a réuni les dirigeants politiques, les
+diplomates, les scientifiques, les représentants des organisations non gouvernementales (ONG)
+de 182 pays dans un élan visant à concilier l’impact des activités socio-économiques humaines et
+l’environnement.
+
+	</div>
+</div>
+
 <div class="debug"></div>
 <pre class="prettyprint">
 
