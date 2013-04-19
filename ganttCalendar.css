@@ -1,10 +1,11 @@
 @CHARSET "UTF-8";
 
 .largeCalendar{
-	/*width: 601px;*/
-	height: 300px;
+	/*width: 100%;*/
+	/*height: 300px;*/
 	border: 1px solid #555;
 	border-radius: 3px;
+	line-height: 12px;
 }
 
 
@@ -15,7 +16,7 @@
 .eventsContainer{
 	width: 300px;
 	overflow:auto;
-	float: right;
+	/*float: right;*/
 }
 
 
@@ -65,17 +66,201 @@
 	position: relative;
 }
 
-.for31days {
+/* GRID 40 */
+.grid-40-offset-1 {
+	background-image: url('img/bg-grid-40.gif');
+	background-position: 0px 0px;
+}
+.grid-40-offset-2 {
+	background-image: url('img/bg-grid-40.gif');
+	background-position: -40px 0px;
+}
+.grid-40-offset-3 {
+	background-image: url('img/bg-grid-40.gif');
+	background-position: -80px 0px;
+}
+.grid-40-offset-4 {
+	background-image: url('img/bg-grid-40.gif');
+	background-position: -120px 0px;
+}
+.grid-40-offset-5 {
+	background-image: url('img/bg-grid-40.gif');
+	background-position: -160px 0px;
+}
+.grid-40-offset-6 {
+	background-image: url('img/bg-grid-40.gif');
+	background-position: -200px 0px;
+}
+.grid-40-offset-0 {
+	background-image: url('img/bg-grid-40.gif');
+	background-position: -240px 0px;
+}
+
+
+/* GRID 30 */
+.grid-30-offset-1 {
+	background-image: url('img/bg-grid-30.gif');
+	background-position: 0px 0px;
+}
+.grid-30-offset-2 {
+	background-image: url('img/bg-grid-30.gif');
+	background-position: -30px 0px;
+}
+.grid-30-offset-3 {
+	background-image: url('img/bg-grid-30.gif');
+	background-position: -60px 0px;
+}
+.grid-30-offset-4 {
+	background-image: url('img/bg-grid-30.gif');
+	background-position: -90px 0px;
+}
+.grid-30-offset-5 {
+	background-image: url('img/bg-grid-30.gif');
+	background-position: -120px 0px;
+}
+.grid-30-offset-6 {
+	background-image: url('img/bg-grid-30.gif');
+	background-position: -150px 0px;
+}
+.grid-30-offset-0 {
+	background-image: url('img/bg-grid-30.gif');
+	background-position: -180px 0px;
+}
+
+/* GRID 20 */
+.grid-20-offset-1 {
+	background-image: url('img/bg-grid-20.gif');
+	background-position: 0px 0px;
+}
+.grid-20-offset-2 {
+	background-image: url('img/bg-grid-20.gif');
+	background-position: -20px 0px;
+}
+.grid-20-offset-3 {
+	background-image: url('img/bg-grid-20.gif');
+	background-position: -40px 0px;
+}
+.grid-20-offset-4 {
+	background-image: url('img/bg-grid-20.gif');
+	background-position: -60px 0px;
+}
+.grid-20-offset-5 {
+	background-image: url('img/bg-grid-20.gif');
+	background-position: -80px 0px;
+}
+.grid-20-offset-6 {
+	background-image: url('img/bg-grid-20.gif');
+	background-position: -100px 0px;
+}
+.grid-20-offset-0 {
+	background-image: url('img/bg-grid-20.gif');
+	background-position: -120px 0px;
+}
+
+/* GRID 50 */
+.grid-50-offset-1{
+	background-image: url('img/bg-grid-50.gif');
+	background-position: 0px 0px;
+}
+.grid-50-offset-2{
+	background-image: url('img/bg-grid-50.gif');
+	background-position: -50px 0px;
+}
+.grid-50-offset-3{
+	background-image: url('img/bg-grid-50.gif');
+	background-position: -100px 0px;
+}
+.grid-50-offset-4{
+	background-image: url('img/bg-grid-50.gif');
+	background-position: -150px 0px;
+}
+.grid-50-offset-5{
+	background-image: url('img/bg-grid-50.gif');
+	background-position: -200px 0px;
+}
+.grid-50-offset-6{
+	background-image: url('img/bg-grid-50.gif');
+	background-position: -250px 0px;
+}
+.grid-50-offset-0{
+	background-image: url('img/bg-grid-50.gif');
+	background-position: -300px 0px;
+}
+
+/* GRID 100 */
+.grid-100-offset-1{
+	background-image: url('img/bg-grid-100.gif');
+	background-position: 0px 0px;
+}
+
+/* GRID 200 */
+.grid-200-offset-1{
+	background-image: url('img/bg-grid-200.gif');
+	background-position: 0px 0px;
+}
+
+/* Week widths */
+.container-grid-100, .container-grid-100 .forWeek{
+	width: 700px; /* = 100*7 */
+}
+
+.container-grid-200, .container-grid-200 .forWeek{
+	width: 1400px; /* = 200*7 */
+}
+
+/* Month widths */
+.container-grid-50 .for31days {
 	width: 1550px; /* = 50*31 */
 }
-.for30days {
+.container-grid-50 .for30days {
 	width: 1500px; /* = 50*30 */
 }
-.for29days {
+.container-grid-50 .for29days {
 	width: 1450px; /* = 50*29 */
 }
-.for28days {
+.container-grid-50 .for28days {
 	width: 1400px; /* = 50*28 */
+}
+
+
+.container-grid-40 .for31days {
+	width: 1240px; /* = 40*31 */
+}
+.container-grid-40 .for30days {
+	width: 1200px; /* = 40*30 */
+}
+.container-grid-40 .for29days {
+	width: 1160px; /* = 40*29 */
+}
+.container-grid-40 .for28days {
+	width: 1120px; /* = 40*28 */
+}
+
+
+.container-grid-30 .for31days {
+	width: 930px; /* = 30*31 */
+}
+.container-grid-30 .for30days {
+	width: 900px; /* = 30*30 */
+}
+.container-grid-30 .for29days {
+	width: 870px; /* = 30*29 */
+}
+.container-grid-30 .for28days {
+	width: 840px; /* = 30*28 */
+}
+
+.container-grid-20 .for31days {
+	width: 620px; /* = 20*31 */
+}
+.container-grid-20 .for30days {
+	width: 600px; /* = 20*30 */
+}
+.container-grid-20 .for29days {
+	width: 580px; /* = 20*29 */
+}
+.container-grid-20 .for28days {
+	width: 560px; /* = 20*28 */
 }
 
 .headerRessources, .day{
@@ -98,8 +283,38 @@
 	background: -ms-linear-gradient(top,  #4a4a53 0%,#33333a 100%); /* IE10+ */
 	background: linear-gradient(to bottom,  #4a4a53 0%,#33333a 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4a4a53', endColorstr='#33333a',GradientType=0 ); /* IE6-9 */
-
 }
+
+
+/* Weekends */
+.weekdayorder_0, .weekdayorder_6 {
+	background: #4a4a53;
+}
+
+.container-grid-200 .day{
+	width: 200px;
+}
+
+.container-grid-100 .day{
+	width: 100px;
+}
+
+.container-grid-50 .day{
+	width: 50px;
+}
+
+.container-grid-40 .day{
+	width: 40px;
+}
+
+.container-grid-30 .day{
+	width: 30px;
+}
+
+.container-grid-20 .day{
+	width: 20px;
+}
+
 
 .headerRessources {
 	color: #fff;
@@ -122,7 +337,7 @@
 	
 }
 
-.month {
+.month, .week {
 	color: #fff;
 	font-family: arial;
 	font-size: 10px;
@@ -143,7 +358,7 @@
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4a4a53', endColorstr='#33333a',GradientType=0 ); /* IE6-9 */
 }
 
-.month .prevMonth {
+.month .prevMonth, .week .prevWeek {
 	float: left;
 	background-image: url('img/button-inset-left.png');
 	background-repeat: no-repeat;
@@ -155,11 +370,11 @@
 	cursor: pointer;
 }
 
-.month .prevMonth:HOVER, .month .nextMonth:HOVER {
+.month .prevMonth:HOVER, .month .nextMonth:HOVER, .week .prevWeek:HOVER, .week .nextWeek:HOVER {
 	background-position: 0 -17px;
 }
 
-.month .nextMonth {
+.month .nextMonth, .week .nextWeek {
 	float: right;
 	background-image: url('img/button-inset-right.png');
 	background-repeat: no-repeat;
@@ -171,7 +386,7 @@
 	cursor: pointer;
 }
 
-.month .nameMonth {
+.month .nameMonth, .week .nameWeek {
 	float: left;
 	text-align: center;
 	width: 75%;
@@ -296,6 +511,68 @@
 	background: linear-gradient(to bottom,  #d9dbd4 0%,#bcbcbc 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d9dbd4', endColorstr='#bcbcbc',GradientType=0 ); /* IE6-9 */
 	
-	
 }
 
+.weekDay{
+	font-weight: normal;
+	font-size: 9px;
+}
+
+
+/* override event CSS */
+.event{
+	background: #b3d5ee; /* Old browsers */
+	background: -moz-linear-gradient(top,  #b3d5ee 0%, #86bce3 5%, #69abdd 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#b3d5ee), color-stop(5%,#86bce3), color-stop(100%,#69abdd)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #b3d5ee 0%,#86bce3 5%,#69abdd 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #b3d5ee 0%,#86bce3 5%,#69abdd 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #b3d5ee 0%,#86bce3 5%,#69abdd 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #b3d5ee 0%,#86bce3 5%,#69abdd 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b3d5ee', endColorstr='#69abdd',GradientType=0 ); /* IE6-9 */
+	
+	
+	border: 1px solid #3c95d7;
+	border-top: 1px solid #5EAEEB;
+}
+
+.event:HOVER{
+	box-shadow: 0 0 5px #000;
+	border: 1px solid #000;
+	color: #000;
+}
+
+.lineForRessource{
+	background-color: #f7f7f7;
+}
+
+
+/* #zoomSlider Styles */
+
+#zoomSlider{
+	margin-top: 15px;
+	width: 150px;
+	background: url(img/slider.png) no-repeat top left;
+	border: none;
+	height: 6px;
+}
+#zoomSlider .ui-slider-handle{
+	background: url(img/slider-handle.png) no-repeat top left;
+	border: none;
+	width: 14px;
+	height: 15px;
+}
+
+.zoomWidget{
+	width: 250px;
+	clear: both;
+	display: inline-block;
+}
+.zoomWidget #zoomSlider{
+	float: left;
+}
+.zoomWidget #zoomValue{
+    margin-left: 160px;
+    margin-top: 8px;
+    color: #555;
+    font-size: 11px;
+}
