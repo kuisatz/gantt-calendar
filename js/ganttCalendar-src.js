@@ -299,6 +299,9 @@ $.extend(TimeLineWeek.prototype, {
 		
 		return this;
 	},
+	formatDate: function(aDate){
+		
+	},
 
 	drawElements: function() {
 		var containerObj, largeCalendar, weekLine, calendarHeaders, eventsContainer, headerRessources, 
@@ -306,6 +309,12 @@ $.extend(TimeLineWeek.prototype, {
 			ressource, bisextile, horizontalCalendarContent, lineOfDays, htmlDays, 
 			indexDay, day2digits;
 		bisextile = ( (this.year%4==0 && this.year%100!=0) || this.year%400==0 )?(1):(0);
+		var firstDayOfYear = new Date(this.year, 0, 1);
+		var milisecondsOffset = 1000 * 60 * 60 * 24 * 7 * (this.weekNumber - 1);
+		var targetTime = firstDayOfYear.getTime() + milisecondsOffset - 86400000;
+		var mondayOfWeek = new Date(targetTime);
+		var sundayOfWeek = new Date(targetTime); 
+		sundayOfWeek.setDate(mondayOfWeek.getDate() + 6);
 
 		containerObj = $("#"+this.container);
 		containerObj.timeLineMonth = this;
@@ -317,7 +326,8 @@ $.extend(TimeLineWeek.prototype, {
 		weekLine = $( document.createElement('div') ).addClass("week");
 		largeCalendar.html(weekLine);
 		weekLine.html("<div class=\"prevWeek\" title=\"[Page down] Go to Previous week\"></div>\
-		<div class=\"nameWeek\"> Week "+this.weekNumber+" "+this.year+"</div>\
+		<div class=\"nameWeek\"> "+this.weekDays[this.lang][1]+" "+mondayOfWeek.toLocaleDateString(this.lang)+" - "
+			+this.weekDays[this.lang][0]+" "+ sundayOfWeek.toLocaleDateString(this.lang) +"</div>\
 		<div class=\"nextWeek\" id=\"nextWeek\" title=\"[Page up] Go to next week\"></div>");
 		
 		calendarHeaders = $( document.createElement('div') ).addClass("leftColumn horizontalCalendarHeaders");
@@ -340,13 +350,13 @@ $.extend(TimeLineWeek.prototype, {
 		if(this.cellWidth*7 + headerRessources.width() + 3 < containerObj.width()){
 			containerObj.width(this.cellWidth*7 + headerRessources.width() + 3);
 		}*/
-/*
+
 		var widthForcontainer = largeCalendar.width() - headerRessources.width() - 1;
-		if( this.cellWidth*this.days[this.month][bisextile] < widthForcontainer){
-			widthForcontainer = this.cellWidth*this.days[this.month][bisextile];
+		if( this.cellWidth*7 < widthForcontainer){
+			widthForcontainer = this.cellWidth*7;
 		}
 		eventsContainer.width(widthForcontainer);
-	*/	
+		
 		/**
 		 * ZOOM FEATURES -- END
 		 */
@@ -374,25 +384,27 @@ $.extend(TimeLineWeek.prototype, {
 		}
 		
 		horizontalCalendarContent = $( document.createElement('div') )
-			.addClass("horizontalCalendarContent forWeek")
-			.attr("tabindex", "0");
+			.addClass("horizontalCalendarContent")
+			.attr("tabindex", "0")
+			.width(this.cellWidth*7);
 		eventsContainer.append(horizontalCalendarContent);
 		
 		lineOfDays = $( document.createElement('div') ).addClass("lineOfDays");
 		horizontalCalendarContent.html(lineOfDays);
 		
 		htmlDays = "";
-		//TODO retrouver les numéros des jours de la semaine
+		var currentDay = mondayOfWeek;
+		// loop on 7 days
 		for(indexDay=1;indexDay<=7;indexDay++){
-			day2digits = (indexDay<10)?("0"+indexDay):(indexDay);
-			jsDate = new Date(this.year, 3/*TODO */, indexDay);
-			htmlDays += "<div class=\"day weekdayorder_"+jsDate.getDay()+"\" id=\"day_"+day2digits+"\">"+
-				day2digits+"<br/><span class=\"weekDay\">"+this.weekDays[this.lang][jsDate.getDay()]+"</span></div>";
+			day2digits = (currentDay.getDate()<10)?("0"+currentDay.getDate()):(currentDay.getDate());
+			htmlDays += "<div class=\"day weekdayorder_"+currentDay.getDay()+"\" id=\"day_"+day2digits+"\">"+
+				day2digits+"<br/><span class=\"weekDay\">"+this.weekDays[this.lang][indexDay%7]+"</span></div>";
+			currentDay.setDate(currentDay.getDate() + 1);
 		}
 		lineOfDays.html(htmlDays);
 		
 		// All groups and ressources, prepare content
-		firstDayOfWeek = new Date(this.year, 3/*TODO */, 1);
+		firstDayOfWeek = mondayOfWeek;
 		for(indexGroup=0;indexGroup<this.ressources.groups.length;indexGroup++){
 			group = this.ressources.groups[indexGroup];
 			horizontalCalendarContent.append("<div data-group=\"group_"+group.id+"\" class=\"group\">&nbsp;</div>");
