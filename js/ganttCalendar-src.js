@@ -35,6 +35,7 @@ TimeLineMonth = function(container, month, year, ressources, updateMonthCallback
 
 $.extend(TimeLineMonth.prototype, {
 	// object variables
+	TimeLineClass: 'MONTH',
 	container:'',
 	month: '',
 	year: '',
@@ -245,10 +246,18 @@ $.extend(Event.prototype, {
 	},
 
 	drawIn: function(containerObject) {
+		var margin, width, newStartDay, newEndDay;
 		containerId = containerObject.container;
-		var margin, width;
-		margin = containerObject.cellWidth * (this.startDay - 1);
-		width = containerObject.cellWidth * (this.endDay - this.startDay) - 3;
+		if(containerObject.TimeLineClass ==  'MONTH'){
+			margin = containerObject.cellWidth * (this.startDay - 1);
+			width = containerObject.cellWidth * (this.endDay - this.startDay) - 3;
+		}else if(containerObject.TimeLineClass == 'WEEK'){
+			newStartDay = this.startDay - containerObject.mondayOfWeek.getDate();
+			newEndDay = this.endDay - containerObject.mondayOfWeek.getDate();
+			margin = containerObject.cellWidth * (newStartDay);
+			width = containerObject.cellWidth * (newEndDay - newStartDay) - 3;
+		}
+		
 		
 		$("#"+containerId).find("#events_r_"+this.ressourceId).append('<div id="'+this.eventId+'" class="event" style="left: '+margin+'px;width:'+width+'px;">'+this.label+'</div>');
 		this.jObject = $("#"+this.eventId);
@@ -275,6 +284,7 @@ TimeLineWeek = function(container, weekNumber, year, ressources, updateWeekCallb
 
 $.extend(TimeLineWeek.prototype, {
 	// object variables
+	TimeLineClass: 'WEEK',
 	container:'',
 	weekNumber: '',
 	year: '',
@@ -289,6 +299,8 @@ $.extend(TimeLineWeek.prototype, {
 		'en':["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]
 	},
 	cellWidth: 20,
+	mondayOfWeek: null,
+	sundayOfWeek: null,
 	ressourcesColumnHeader : 'Ressources',
 	init: function(container, weekNumber, year, ressources, updateWeekCallback) {
 		this.container = container;
@@ -298,9 +310,6 @@ $.extend(TimeLineWeek.prototype, {
 		this.updateWeekCallback = updateWeekCallback || function(){};
 		
 		return this;
-	},
-	formatDate: function(aDate){
-		
 	},
 
 	drawElements: function() {
@@ -312,9 +321,9 @@ $.extend(TimeLineWeek.prototype, {
 		var firstDayOfYear = new Date(this.year, 0, 1);
 		var milisecondsOffset = 1000 * 60 * 60 * 24 * 7 * (this.weekNumber - 1);
 		var targetTime = firstDayOfYear.getTime() + milisecondsOffset - 86400000;
-		var mondayOfWeek = new Date(targetTime);
-		var sundayOfWeek = new Date(targetTime); 
-		sundayOfWeek.setDate(mondayOfWeek.getDate() + 6);
+		this.mondayOfWeek = new Date(targetTime);
+		this.sundayOfWeek = new Date(targetTime); 
+		this.sundayOfWeek.setDate(this.mondayOfWeek.getDate() + 6);
 
 		containerObj = $("#"+this.container);
 		containerObj.timeLineMonth = this;
@@ -326,8 +335,8 @@ $.extend(TimeLineWeek.prototype, {
 		weekLine = $( document.createElement('div') ).addClass("week");
 		largeCalendar.html(weekLine);
 		weekLine.html("<div class=\"prevWeek\" title=\"[Page down] Go to Previous week\"></div>\
-		<div class=\"nameWeek\"> "+this.weekDays[this.lang][1]+" "+mondayOfWeek.toLocaleDateString(this.lang)+" - "
-			+this.weekDays[this.lang][0]+" "+ sundayOfWeek.toLocaleDateString(this.lang) +"</div>\
+		<div class=\"nameWeek\"> "+this.weekDays[this.lang][1]+" "+this.mondayOfWeek.toLocaleDateString(this.lang)+" - "
+			+this.weekDays[this.lang][0]+" "+ this.sundayOfWeek.toLocaleDateString(this.lang) +"</div>\
 		<div class=\"nextWeek\" id=\"nextWeek\" title=\"[Page up] Go to next week\"></div>");
 		
 		calendarHeaders = $( document.createElement('div') ).addClass("leftColumn horizontalCalendarHeaders");
@@ -393,7 +402,7 @@ $.extend(TimeLineWeek.prototype, {
 		horizontalCalendarContent.html(lineOfDays);
 		
 		htmlDays = "";
-		var currentDay = mondayOfWeek;
+		var currentDay = new Date(this.mondayOfWeek.getTime());
 		// loop on 7 days
 		for(indexDay=1;indexDay<=7;indexDay++){
 			day2digits = (currentDay.getDate()<10)?("0"+currentDay.getDate()):(currentDay.getDate());
@@ -404,7 +413,7 @@ $.extend(TimeLineWeek.prototype, {
 		lineOfDays.html(htmlDays);
 		
 		// All groups and ressources, prepare content
-		firstDayOfWeek = mondayOfWeek;
+		firstDayOfWeek = new Date(this.mondayOfWeek.getTime());
 		for(indexGroup=0;indexGroup<this.ressources.groups.length;indexGroup++){
 			group = this.ressources.groups[indexGroup];
 			horizontalCalendarContent.append("<div data-group=\"group_"+group.id+"\" class=\"group\">&nbsp;</div>");

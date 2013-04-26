@@ -22,9 +22,9 @@ $(function() {
 	// Definition : Event(ressourceId, eventId, startDay, endDay, label)
 	
 	// 2012 - oct :
-	var evt1 = new Event(1, "event_001", 2, 5, "Event Paris - WSDD");
-	var evt2 = new Event(2, "event_002", 2, 5, "Paris - WSDD(2-5)");
-	var evt5 = new Event(3, "event_005", 5.5, 7, "Week-end");
+	var evt1 = new Event(1, "event_001", 4, 5, "Event Paris - WSDD");
+	var evt2 = new Event(2, "event_002", 5, 7, "Paris - WSDD(2-5)");
+	var evt5 = new Event(3, "event_005", 9, 11, "Week-end");
 //	var evt6 = new Event(1, "event_006", 6, 10, "Visit Stan LONE");
 //	var evt7 = new Event(1, "event_007", 12, 19, "Confirm Dentist");
 //	var evt8 = new Event(4, "event_008", 6, 10, "Visit Stan LONE");
@@ -85,7 +85,7 @@ $(function() {
 			}
 	);
 
-	timeline.lang = 'en';
+	timeline.lang = 'fr';
 	timeline.cellWidth = 200;
 	timeline.drawElements();
 	timeline.updateWeekCallback();
