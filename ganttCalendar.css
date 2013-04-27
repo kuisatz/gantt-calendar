@@ -200,6 +200,10 @@
 }
 
 /* Week widths */
+.container-grid-150, .container-grid-150 .forWeek{
+	width: 1050px; /* = 150*7 */
+}
+
 .container-grid-100, .container-grid-100 .forWeek{
 	width: 700px; /* = 100*7 */
 }
@@ -293,6 +297,10 @@
 
 .container-grid-200 .day{
 	width: 200px;
+}
+
+.container-grid-150 .day{
+	width: 150px;
 }
 
 .container-grid-100 .day{
