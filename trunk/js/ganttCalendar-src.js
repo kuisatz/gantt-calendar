@@ -246,7 +246,7 @@ $.extend(Event.prototype, {
 	},
 
 	drawIn: function(containerObject) {
-		var margin, width, newStartDay, newEndDay;
+		var margin=0, width=0, newStartDay, newEndDay;
 		containerId = containerObject.container;
 		if(containerObject.TimeLineClass ==  'MONTH'){
 			margin = containerObject.cellWidth * (this.startDay - 1);
@@ -288,13 +288,7 @@ $.extend(TimeLineWeek.prototype, {
 	container:'',
 	weekNumber: '',
 	year: '',
-	days: {1:[31,31],2:[28,29],3:[31,31],4:[30,30],5:[31,31],6:[30,30],
-		7:[31,31],8:[31,31],9:[30,30],10:[31,31],11:[30,30],12:[31,31]
-	},
 	lang: 'fr',
-	months: {'fr':["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Aout", "Septembre", "Octobre", "Novembre", "Décembre"],
-		'en':["January", "February", "March", "April", "May", "June", "July", "Agust", "September", "October", "November", "December"]
-	},
 	weekDays: {'fr':["Dim","Lun","Mar","Mer","Jeu","Ven","Sam"],
 		'en':["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]
 	},
@@ -355,10 +349,10 @@ $.extend(TimeLineWeek.prototype, {
 		// set the default size for calculations
 		//containerObj.width( this.cellWidth*7 + headerRessources.width() + 3 );
 		containerObj.width( $(document).width() - 1);
-		/*
+		
 		if(this.cellWidth*7 + headerRessources.width() + 3 < containerObj.width()){
 			containerObj.width(this.cellWidth*7 + headerRessources.width() + 3);
-		}*/
+		}
 
 		var widthForcontainer = largeCalendar.width() - headerRessources.width() - 1;
 		if( this.cellWidth*7 < widthForcontainer){
