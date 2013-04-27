@@ -550,16 +550,18 @@
 
 #zoomSlider{
 	margin-top: 15px;
-	width: 150px;
+	width: 152px;
 	background: url(img/slider.png) no-repeat top left;
 	border: none;
 	height: 6px;
+	margin-right: 15px;
 }
 #zoomSlider .ui-slider-handle{
 	background: url(img/slider-handle.png) no-repeat top left;
 	border: none;
 	width: 14px;
 	height: 15px;
+	margin-left: -6px;
 }
 
 .zoomWidget{
